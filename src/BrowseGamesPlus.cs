@@ -2,7 +2,6 @@
 using System;
 using HarmonyLib;
 using System.Reflection;
-using Priority = DuckGame.Priority;
 
 [assembly: AssemblyTitle("|0,94,223|Browse Games|242,76,5|+")]
 [assembly: AssemblyCompany("|GREEN|TheKingOfCringe|RED|11")]
@@ -13,8 +12,6 @@ namespace BrowseGamesPlus
 {
     public class BrowseGamesPlus : ClientMod
     {
-        public override Priority priority => Priority.Monitor;
-
         protected override void OnPreInitialize()
         {
             AppDomain.CurrentDomain.AssemblyResolve += Utilities.LoadHarmony;

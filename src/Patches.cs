@@ -77,8 +77,11 @@ namespace BrowseGamesPlus
             {
                 Lobby lobby = __instance.lobby;
 
-                if (lobby == null)
+                if (lobby is null)
+                {
                     __result = ____userCount;
+                    return false;
+                }
 
                 __result = lobby.users.Where(user => user != Steam.user).Count();
 

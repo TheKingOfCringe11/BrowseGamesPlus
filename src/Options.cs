@@ -11,10 +11,10 @@ namespace BrowseGamesPlus
 
         public static void Save()
         {
-            DXMLNode data = new DXMLNode("Data");
+            var data = new DXMLNode("Data");
             data.Add(_data.Serialize());
 
-            DuckXML xml = new DuckXML();
+            var xml = new DuckXML();
             xml.Add(data);
 
             DuckFile.SaveDuckXML(xml, FileName);

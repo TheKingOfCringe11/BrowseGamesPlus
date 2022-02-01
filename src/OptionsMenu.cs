@@ -20,7 +20,7 @@ namespace BrowseGamesPlus
         {
             var menu = new UIMenu("BG+ OPTIONS", Layer.HUD.camera.width / 2f, Layer.HUD.camera.height / 2f, 
                 190f, -1f, "@CANCEL@BACK", null, false);
-            var data = Options.Data;
+            OptionsData data = Options.Data;
 
             menu.Add(new UIMenuItemToggle("PLAYERS", field: new FieldBinding(data, "Players")));
 

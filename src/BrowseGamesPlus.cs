@@ -6,7 +6,7 @@ using System.Reflection;
 [assembly: AssemblyTitle("|0,94,223|Browse Games|242,76,5|+")]
 [assembly: AssemblyCompany("|GREEN|TheKingOfCringe|RED|11")]
 [assembly: AssemblyDescription("Provides you with detailed information about lobbies!")]
-[assembly: AssemblyVersion("1.0.0.2")]
+[assembly: AssemblyVersion("1.0.0.3")]
 
 namespace BrowseGamesPlus
 {

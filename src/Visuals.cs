@@ -18,9 +18,9 @@ namespace BrowseGamesPlus
 
         private static SpriteMap _heart;
 
-        private static int _pointTimer = 0;
+        private static int _pointsTimer = 0;
 
-        public static void Initialize()
+        static Visuals()
         {
             _normalMaps = new Sprite("normalIcon") { scale = new Vec2(1.1f) };
             _randomMaps = new Sprite("randomIcons") { scale = new Vec2(1.1f) };
@@ -44,19 +44,19 @@ namespace BrowseGamesPlus
 
             if (Options.Data.Maps)
             {
-                Vec2 mapsPosition = new Vec2(x + 410f, y - 0.5f);
+                var mapsPosition = new Vec2(x + 410f, y - 0.5f);
 
                 Graphics.Draw(_normalMaps, mapsPosition.x, mapsPosition.y, 0.6f);
                 _smallFont.Draw($"{lobby.GetNormalMapsCount()}%", new Vec2(mapsPosition.x + 10f, mapsPosition.y + 1f), color, 0.5f);
 
                 Graphics.Draw(_randomMaps, mapsPosition.x, mapsPosition.y + 9f, 0.6f);
-                _smallFont.Draw($"{lobby.GetRandomMapsCount()}%", new Vec2(mapsPosition.x + 10f, mapsPosition.y + 9f + 1f), color, 0.5f);
+                _smallFont.Draw($"{lobby.GetRandomMapsCount()}%", new Vec2(mapsPosition.x + 10f, mapsPosition.y + 10f), color, 0.5f);
 
                 Graphics.Draw(_customMaps, mapsPosition.x, mapsPosition.y + 18f, 0.6f);
-                _smallFont.Draw($"{lobby.GetCustomMapsCount()}%", new Vec2(mapsPosition.x + 10f, mapsPosition.y + 18f + 1f), color, 0.5f);
+                _smallFont.Draw($"{lobby.GetCustomMapsCount()}%", new Vec2(mapsPosition.x + 10f, mapsPosition.y + 19f), color, 0.5f);
 
                 Graphics.Draw(_internetMaps, mapsPosition.x, mapsPosition.y + 27f, 0.6f);
-                _smallFont.Draw($"{lobby.GetInternetMapsCount()}%", new Vec2(mapsPosition.x + 10f, mapsPosition.y + 27f + 1f), color, 0.5f);
+                _smallFont.Draw($"{lobby.GetInternetMapsCount()}%", new Vec2(mapsPosition.x + 10f, mapsPosition.y + 28f), color, 0.5f);
             }
 
             if (!Options.Data.ConnectionRequired)
@@ -66,12 +66,12 @@ namespace BrowseGamesPlus
             {
                 if (Options.Data.Players)
                 {
-                    Vec2 position = new Vec2(x + 277f, y + 1f);
-                    var users = lobby.users.Where(user => user != Steam.user && user != lobby.owner);
+                    var position = new Vec2(x + 277f, y + 1f);
+                    IEnumerable<User> users = lobby.users.Where(user => user != Steam.user && user != lobby.owner);
 
                     for (int i = 0; i < users.Count(); i++)
                     {
-                        Vec2 offset = new Vec2(i / 4 < 1 ? 0f : _smallFont.maxWidth + 8f, 9f * (i > 3 ? i - 4 : i));
+                        var offset = new Vec2(i / 4 < 1 ? 0f : _smallFont.maxWidth + 8f, 9f * (i > 3 ? i - 4 : i));
                         User user = users.ElementAt(i);
 
                         _smallFont.Draw(user.name, position + offset, color, 0.5f);
@@ -102,15 +102,15 @@ namespace BrowseGamesPlus
             {
                 string loading = "LOADING";
 
-                for (int i = 0; i < _pointTimer / 30; i++)
+                for (int i = 0; i < _pointsTimer / 30; i++)
                     loading += ".";
 
                 _bigFont.Draw(loading, new Vec2(x + 240f, y + 12f), Color.Red, 0.5f);
 
-                _pointTimer++;
+                _pointsTimer++;
 
-                if (_pointTimer > 119)
-                    _pointTimer = 0;
+                if (_pointsTimer > 119)
+                    _pointsTimer = 0;
             }
         }
     }

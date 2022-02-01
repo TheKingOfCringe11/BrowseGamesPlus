@@ -17,7 +17,7 @@ namespace BrowseGamesPlus
             Steam.LeaveLobby(Steam.JoinLobby(data.lobby.id));
         }
 
-        public static Assembly LoadHarmony(object sender, ResolveEventArgs args)
+        public static Assembly OnAssemblyResolve(object sender, ResolveEventArgs args)
         {
             string name = "0Harmony";
 

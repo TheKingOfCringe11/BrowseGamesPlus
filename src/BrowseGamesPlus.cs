@@ -14,12 +14,11 @@ namespace BrowseGamesPlus
     {
         protected override void OnPreInitialize()
         {
-            AppDomain.CurrentDomain.AssemblyResolve += Utilities.LoadHarmony;
+            AppDomain.CurrentDomain.AssemblyResolve += Utilities.OnAssemblyResolve;
         }
 
         protected override void OnPostInitialize()
 		{
-            Visuals.Initialize();
             Options.Load();
 
             if (Steam.IsInitialized())

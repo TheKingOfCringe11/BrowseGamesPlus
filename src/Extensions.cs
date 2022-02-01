@@ -11,7 +11,7 @@ namespace BrowseGamesPlus
     {
         public static IEnumerable<CodeInstruction> InsertInstructions(this IEnumerable<CodeInstruction> instructions, OpCode opCode, object operand, OpCode next, OpCode previous, List<CodeInstruction> instructionsToInsert)
         {
-            var code = instructions.ToList();
+            List<CodeInstruction> code = instructions.ToList();
             int insertionIndex = 0;
 
             if (instructions.TryGetIndex(ref insertionIndex, opCode, operand, next, previous))
@@ -37,10 +37,8 @@ namespace BrowseGamesPlus
         public static LocalBuilder GetLocalBuilder(this IEnumerable<CodeInstruction> instructions, OpCode opCode, Type type, OpCode next, OpCode previous)
         {
             foreach (CodeInstruction instruction in instructions.ByOpCodes(opCode, next, previous))
-            {
                 if (instruction.operand is LocalBuilder builder && builder.LocalType == type)
                     return builder;
-            }
 
             return null;
         }
@@ -48,10 +46,8 @@ namespace BrowseGamesPlus
         private static IEnumerable<CodeInstruction> ByOpCodes(this IEnumerable<CodeInstruction> instructions, OpCode opCode, OpCode next, OpCode previous)
         {
             for (int i = 0; i < instructions.Count(); i++)
-            {
                 if (instructions.ElementAt(i).opcode == opCode && (i >= instructions.Count() - 1 || instructions.ElementAt(i + 1).opcode == next) && (i < 1 || instructions.ElementAt(i - 1).opcode == previous))
                     yield return instructions.ElementAt(i);
-            }
         }
 
         public static string LimitLength(this string line, int maxLength)

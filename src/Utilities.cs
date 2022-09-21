@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace BrowseGamesPlus
 {
-    static class Utilities
+    public static class Utilities
     {
         public static void InitializeLobbyUserData(UIServerBrowser.LobbyData data)
         {
@@ -15,16 +15,6 @@ namespace BrowseGamesPlus
                 return;
 
             Steam.LeaveLobby(Steam.JoinLobby(data.lobby.id));
-        }
-
-        public static Assembly OnAssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            string name = "0Harmony";
-
-            if (!args.Name.Contains(name))
-                return null;
-
-            return Assembly.LoadFrom(Mod.GetPath<BrowseGamesPlus>(name + ".dll"));
         }
 
         public static Sprite SpriteFromBytes(byte[] bytes)
@@ -37,7 +27,10 @@ namespace BrowseGamesPlus
                 var texture = new Texture2D(Graphics.device, 64, 64);
                 texture.SetData(bytes);
 
-                return new Sprite(texture) { scale = new Vec2(0.5f) };
+                return new Sprite(texture) 
+                { 
+                    scale = new Vec2(0.5f) 
+                };
             }
             catch
             {

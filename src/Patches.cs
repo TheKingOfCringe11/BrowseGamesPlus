@@ -7,7 +7,7 @@ using static System.Reflection.Emit.OpCodes;
 
 namespace BrowseGamesPlus
 {
-    internal sealed class Patches
+    internal static class Patches
     {
         [HarmonyPatch(typeof(TitleScreen), "Initialize")]
         private static class TitleScreenPatched

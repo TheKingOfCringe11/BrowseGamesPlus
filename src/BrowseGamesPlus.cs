@@ -14,7 +14,7 @@ namespace BrowseGamesPlus
     {
         protected override void OnPreInitialize()
         {
-            AppDomain.CurrentDomain.AssemblyResolve += Utilities.OnAssemblyResolve;
+            AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolver.Resolve;
         }
 
         protected override void OnPostInitialize()

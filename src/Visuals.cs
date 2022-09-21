@@ -1,37 +1,63 @@
 ﻿using DuckGame;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace BrowseGamesPlus
 {
-    static class Visuals
+    public static class Visuals
     {
-        private static FancyBitmapFont _smallFont = new FancyBitmapFont("smallFont") { scale = new Vec2(0.8f) };
-        private static FancyBitmapFont _bigFont = new FancyBitmapFont("smallFont") { scale = new Vec2(1.2f) };
+        private static FancyBitmapFont s_smallFont = new FancyBitmapFont("smallFont") 
+        { 
+            scale = new Vec2(0.8f) 
+        };
 
-        private static Dictionary<User, Sprite> _avatars = new Dictionary<User, Sprite>();    
+        private static FancyBitmapFont s_bigFont = new FancyBitmapFont("smallFont") 
+        { 
+            scale = new Vec2(1.2f) 
+        };
 
-        private static Sprite _normalMaps;
-        private static Sprite _randomMaps;
-        private static Sprite _customMaps;
-        private static Sprite _internetMaps;
+        private static Dictionary<User, Sprite> s_avatars = new Dictionary<User, Sprite>();    
 
-        private static SpriteMap _heart;
+        private static Sprite s_normalMapsSprite;
+        private static Sprite s_randomMapsSprite;
+        private static Sprite s_customMapsSprite;
+        private static Sprite s_internetMapsSprite;
 
-        private static int _pointsTimer = 0;
+        private static SpriteMap s_heartSprite;
+
+        private static int s_pointsTimer = 0;
 
         static Visuals()
         {
-            _normalMaps = new Sprite("normalIcon") { scale = new Vec2(1.1f) };
-            _randomMaps = new Sprite("randomIcons") { scale = new Vec2(1.1f) };
-            _customMaps = new Sprite("customIcon") { scale = new Vec2(1.1f) };
-            _internetMaps = new Sprite("rainbowIcon") { scale = new Vec2(1.1f) };
+            s_normalMapsSprite = new Sprite("normalIcon") 
+            { 
+                scale = new Vec2(1.1f) 
+            };
 
-            _heart = new SpriteMap("hats/hearts", 32, 32) { scale = new Vec2(0.45f) };
+            s_randomMapsSprite = new Sprite("randomIcons") 
+            { 
+                scale = new Vec2(1.1f) 
+            };
 
-            _smallFont.maxRows = 11;
-            _smallFont.maxWidth = 55;
-            _smallFont.singleLine = true;
+            s_customMapsSprite = new Sprite("customIcon") 
+            { 
+                scale = new Vec2(1.1f) 
+            };
+
+            s_internetMapsSprite = new Sprite("rainbowIcon") 
+            { 
+                scale = new Vec2(1.1f) 
+            };
+
+            s_heartSprite = new SpriteMap("hats/hearts", 32, 32) 
+            { 
+                scale = new Vec2(0.45f) 
+            };
+
+            s_smallFont.maxRows = 11;
+            s_smallFont.maxWidth = 55;
+            s_smallFont.singleLine = true;
         }
 
         public static void Draw(UIServerBrowser.LobbyData data, float x, float y)
@@ -46,17 +72,17 @@ namespace BrowseGamesPlus
             {
                 var mapsPosition = new Vec2(x + 410f, y - 0.5f);
 
-                Graphics.Draw(_normalMaps, mapsPosition.x, mapsPosition.y, 0.6f);
-                _smallFont.Draw($"{lobby.GetNormalMapsCount()}%", new Vec2(mapsPosition.x + 10f, mapsPosition.y + 1f), color, 0.5f);
+                Graphics.Draw(s_normalMapsSprite, mapsPosition.x, mapsPosition.y, 0.6f);
+                s_smallFont.Draw($"{lobby.GetNormalMapsCount()}%", new Vec2(mapsPosition.x + 10f, mapsPosition.y + 1f), color, 0.5f);
 
-                Graphics.Draw(_randomMaps, mapsPosition.x, mapsPosition.y + 9f, 0.6f);
-                _smallFont.Draw($"{lobby.GetRandomMapsCount()}%", new Vec2(mapsPosition.x + 10f, mapsPosition.y + 10f), color, 0.5f);
+                Graphics.Draw(s_randomMapsSprite, mapsPosition.x, mapsPosition.y + 9f, 0.6f);
+                s_smallFont.Draw($"{lobby.GetRandomMapsCount()}%", new Vec2(mapsPosition.x + 10f, mapsPosition.y + 10f), color, 0.5f);
 
-                Graphics.Draw(_customMaps, mapsPosition.x, mapsPosition.y + 18f, 0.6f);
-                _smallFont.Draw($"{lobby.GetCustomMapsCount()}%", new Vec2(mapsPosition.x + 10f, mapsPosition.y + 19f), color, 0.5f);
+                Graphics.Draw(s_customMapsSprite, mapsPosition.x, mapsPosition.y + 18f, 0.6f);
+                s_smallFont.Draw($"{lobby.GetCustomMapsCount()}%", new Vec2(mapsPosition.x + 10f, mapsPosition.y + 19f), color, 0.5f);
 
-                Graphics.Draw(_internetMaps, mapsPosition.x, mapsPosition.y + 27f, 0.6f);
-                _smallFont.Draw($"{lobby.GetInternetMapsCount()}%", new Vec2(mapsPosition.x + 10f, mapsPosition.y + 28f), color, 0.5f);
+                Graphics.Draw(s_internetMapsSprite, mapsPosition.x, mapsPosition.y + 27f, 0.6f);
+                s_smallFont.Draw($"{lobby.GetInternetMapsCount()}%", new Vec2(mapsPosition.x + 10f, mapsPosition.y + 28f), color, 0.5f);
             }
 
             if (!Options.Data.ConnectionRequired)
@@ -71,13 +97,13 @@ namespace BrowseGamesPlus
 
                     for (int i = 0; i < users.Count(); i++)
                     {
-                        var offset = new Vec2(i / 4 < 1 ? 0f : _smallFont.maxWidth + 8f, 9f * (i > 3 ? i - 4 : i));
+                        var offset = new Vec2(i / 4 < 1 ? 0f : s_smallFont.maxWidth + 8f, 9f * (i > 3 ? i - 4 : i));
                         User user = users.ElementAt(i);
 
-                        _smallFont.Draw(user.name, position + offset, color, 0.5f);
+                        s_smallFont.Draw(user.name, position + offset, color, 0.5f);
 
                         if (Options.Data.Friends && user.relationship == FriendRelationship.Friend)
-                            Graphics.Draw(_heart, position.x + _smallFont.GetWidth(user.name.LimitLength(11)) + offset.x, y + offset.y - 5f, 0.5f);
+                            Graphics.Draw(s_heartSprite, position.x + s_smallFont.GetWidth(user.name.LimitLength(11)) + offset.x, y + offset.y - 5f, 0.5f);
                     }
                 }
 
@@ -85,7 +111,7 @@ namespace BrowseGamesPlus
                 {
                     Sprite avatar;
 
-                    if (_avatars.TryGetValue(lobby.owner, out avatar))
+                    if (s_avatars.TryGetValue(lobby.owner, out avatar))
                     {
                         Graphics.Draw(avatar, x + 2f, y + 2f, 0.6f);
                     }
@@ -94,23 +120,23 @@ namespace BrowseGamesPlus
                         avatar = Utilities.SpriteFromBytes(lobby.owner.avatarMedium);
 
                         if (avatar is not null)
-                            _avatars.Add(lobby.owner, avatar);
+                            s_avatars.Add(lobby.owner, avatar);
                     }
                 }
             }
             else
             {
-                string loading = "LOADING";
+                var builder = new StringBuilder("LOADING");
 
-                for (int i = 0; i < _pointsTimer / 30; i++)
-                    loading += ".";
+                for (int i = 0; i < s_pointsTimer / 30; i++)
+                    builder.Append(".");
 
-                _bigFont.Draw(loading, new Vec2(x + 240f, y + 12f), Color.Red, 0.5f);
+                s_bigFont.Draw(builder.ToString(), new Vec2(x + 240f, y + 12f), Color.Red, 0.5f);
 
-                _pointsTimer++;
+                s_pointsTimer++;
 
-                if (_pointsTimer > 119)
-                    _pointsTimer = 0;
+                if (s_pointsTimer > 119)
+                    s_pointsTimer = 0;
             }
         }
     }

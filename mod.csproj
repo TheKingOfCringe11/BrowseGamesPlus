@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\AssemblyResolver.cs" />
     <Compile Include="src\Options.cs" />
     <Compile Include="src\OptionsData.cs" />
     <Compile Include="src\OptionsMenu.cs" />

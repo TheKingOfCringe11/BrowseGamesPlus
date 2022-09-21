@@ -7,7 +7,7 @@ using System.Reflection.Emit;
 
 namespace BrowseGamesPlus
 {
-    static class Extensions
+    public static class Extensions
     {
         public static IEnumerable<CodeInstruction> InsertInstructions(this IEnumerable<CodeInstruction> instructions, OpCode opCode, object operand, OpCode next, OpCode previous, List<CodeInstruction> instructionsToInsert)
         {
@@ -58,19 +58,24 @@ namespace BrowseGamesPlus
             return line;
         }
 
+        public static int GetData(this Lobby lobby, string name)
+        {
+            return int.Parse(lobby.GetLobbyData(name));
+        }
+
         public static int GetNormalMapsCount(this Lobby lobby)
         {
-            return int.Parse(lobby.GetLobbyData("normalmaps"));
+            return lobby.GetData("normalmaps");
         }
 
         public static int GetRandomMapsCount(this Lobby lobby)
         {
-            return int.Parse(lobby.GetLobbyData("randommaps"));
+            return lobby.GetData("randommaps");
         }
 
         public static int GetCustomMapsCount(this Lobby lobby)
         {
-            return int.Parse(lobby.GetLobbyData("custommaps"));
+            return lobby.GetData("custommaps");
         }
 
         public static int GetInternetMapsCount(this Lobby lobby)

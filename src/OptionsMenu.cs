@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BrowseGamesPlus
 {
-    static class OptionsMenu
+    public static class OptionsMenu
     {
         public static void AddToOptionsMenu(UIMenu optionsMenu, UIComponent optionsGroup)
         {
